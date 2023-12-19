@@ -29,48 +29,10 @@ class MainScene extends Phaser.Scene {
     this.hanako = hanako;
     }
 
-    arrow_move(cursors, object){
-        if(cursors.up.isDown){
-            console.log("Up!!");
-            object.setVelocityY(-4);// 上方向の速度を設定
-        }else if(cursors.down.isDown){
-            console.log("down!!");
-            object.setVelocityY(4);// 下方向の速度を設定
-        }else if(cursors.left.isDown){
-            console.log("Left");
-            object.setVelocityX(-4);// 左方向の速度を設定
-        }else if(cursors.right.isDown){
-            console.log("Right!!");
-            object.setVelocityX(4);// 右方向の速度を設定
-        }else{
-            object.setVelocity(0,0);// 横方向の速度を0
-        }
-    }
 
-    reverse_arrow_move(cursors, object){
-        if(cursors.up.isDown){
-            console.log("Up!!");
-            object.setVelocityY(4);// 上方向の速度を設定
-        }else if(cursors.down.isDown){
-            console.log("down!!");
-            object.setVelocityY(-4);// 下方向の速度を設定
-        }else if(cursors.left.isDown){
-            console.log("Left");
-            object.setVelocityX(4);// 左方向の速度を設定
-        }else if(cursors.right.isDown){
-            console.log("Right!!");
-            object.setVelocityX(-4);// 右方向の速度を設定
-        }else{
-            object.setVelocity(0,0);// 横方向の速度を0
-        }
-    }
 
     // 毎フレーム実行される繰り返し処理
     update() {
-        let cursors = this.input.keyboard.createCursorKeys();
 
-        // 矢印キーのカーソル情報とplayerスプライトをarrow_move()メソッドに渡す
-        this.arrow_move(cursors, this.taro);
-        this.reverse_arrow_move(cursors, this.hanako);
     }
 }

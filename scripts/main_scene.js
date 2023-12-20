@@ -50,7 +50,7 @@ class MainScene extends Phaser.Scene {
 
     
     //太郎と静止物グループの衝突判定
-    this.physics.add.collider(this.taro, staticGroup);
+    // this.physics.add.collider(this.taro, staticGroup);
     
     // リンゴまたはオレンジに当たったらゲームを停止
     this.physics.add.overlap(this.taro, staticGroup, hitFruit, null, this);

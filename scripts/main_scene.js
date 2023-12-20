@@ -25,25 +25,43 @@ class MainScene extends Phaser.Scene {
     const taro = this.physics.add.sprite(50, 50, 'taro');
     const hanako = this.physics.add.sprite(750, 400, 'hanako');
 
-function generateRandomPosition() {
-    const x = Phaser.Math.Between(25, 775);
-    const y = Phaser.Math.Between(25, 425);
-    return { x, y };
-}
+    // 動かない物体をまとめる
+    let staticGroup = this.physics.add.staticGroup();
 
-for (let i = 0; i < 5; i++) {
-    const applePos = generateRandomPosition();
-    this.add.image(applePos.x, applePos.y, 'apple'); 
-}
 
-for (let i = 0; i < 5; i++) {
-    const orengePos = generateRandomPosition();
-    this.add.image(orengePos.x, orengePos.y, 'orenge'); 
-}
+    function generateRandomPosition() {
+        const x = Phaser.Math.Between(25, 775);
+        const y = Phaser.Math.Between(25, 425);
+        return { x, y };
+    }
+
+    for (let i = 0; i < 5; i++) {
+        const applePos = generateRandomPosition();
+        staticGroup.create(applePos.x, applePos.y, 'apple'); 
+    }
+
+    for (let i = 0; i < 5; i++) {
+        const orengePos = generateRandomPosition();
+        staticGroup.create(orengePos.x, orengePos.y, 'orenge'); 
+    }
     // MainSceneクラスのプロパティにplayerを設定
     this.taro = taro;
     this.hanako = hanako;
-    }
+
+    
+    //太郎と静止物グループの衝突判定
+    this.physics.add.collider(this.taro, staticGroup);
+    
+    // リンゴまたはオレンジに当たったらゲームを停止
+    this.physics.add.overlap(this.taro, staticGroup, hitFruit, null, this);
+        this.physics.add.overlap(this.hanako, staticGroup, hitFruit, null, this);
+        function hitFruit(taro, fruit) {
+            // ここにゲームを停止する処理を追加
+            this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' });
+            this.physics.pause();
+            console.log("Game Over!");
+        }
+}
     arrow_move(cursors, object1,object2){
         if(cursors.up.isDown){
             console.log("Up!!");

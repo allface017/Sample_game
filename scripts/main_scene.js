@@ -7,6 +7,7 @@ class MainScene extends Phaser.Scene {
         super('MainScene');
         //果物カウンター
         this.fruitsCounter = 0; 
+        // this.timecount = 10000; 
     }
     // シーンの事前読み込み処理
     preload() {
@@ -55,17 +56,18 @@ class MainScene extends Phaser.Scene {
     this.physics.add.overlap(this.hanako, staticGroup, this.hitFruit, null, this);
 
     //太郎と静止物グループの衝突判定
-    // this.physics.add.collider(this.taro, staticGroup);
+    this.physics.add.overlap(this.taro, staticGroup, outFruit, null, this);
+    this.physics.add.collider(this.taro, staticGroup);
     // リンゴまたはオレンジに当たったらゲームを停止
     //「TARO」の当たり判定処理
-    //this.physics.add.overlap(this.taro, staticGroup, hitFruit, null, this);
+    this.physics.add.overlap(this.taro, staticGroup, outFruit, null, this);
         // this.physics.add.overlap(this.hanako, staticGroup, hitFruit, null, this);
-        // function hitFruit(taro, fruit) {
-        //     // ここにゲームを停止する処理を追加
-        //     this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' });
-        //     this.physics.pause();
-        //     console.log("Game Over!");
-        // }
+        function outFruit(taro, fruit) {
+            // ここにゲームを停止する処理を追加
+            this.add.text(D_WIDTH/3,D_HEIGHT*1/3, 'Game Over!', { fontSize: '32px', fill: '#CDC' });
+            this.physics.pause();
+            console.log("Game Over!");
+        }
 }
     arrow_move(cursors, object1,object2){
         if(cursors.up.isDown){
@@ -96,6 +98,11 @@ class MainScene extends Phaser.Scene {
         fruit.destroy();//フルーツを消す
 
 
+    }
+
+    gameOver() {
+        this.add.text(400, 200, 'GAME OVER', { fontSize: '32px', fill: '#CDC' });
+        this.physics.pause();
     }
 
     gameClear() {
